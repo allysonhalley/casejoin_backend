@@ -56,6 +56,15 @@ public class CategoryController {
         }
     }
 
+    @GetMapping("/category-by-name/{name}")
+    public ResponseEntity<List<Category>> getCategoryByName(@PathVariable("name") String name) throws Exception {
+        try {
+            return ResponseEntity.ok(categoryService.findByName(name));
+        }catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity deleteCategory(@PathVariable String id) throws Exception {
         try {
