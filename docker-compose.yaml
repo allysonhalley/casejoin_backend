@@ -1,0 +1,16 @@
+services:
+  casejoin-postgres:
+    image: 'postgres:latest'
+    container_name: casejoin_postgres
+    environment:
+      - POSTGRES_DB=casejoindb
+      - POSTGRES_PASSWORD=keypass
+      - POSTGRES_USER=admin
+    ports:
+      - 5433:5432
+    volumes:
+      - ./postgres-db:/var/lib/postgresql/data
+volumes:
+  postgres-db:
+networks:
+  casejoin-net:
