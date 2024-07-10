@@ -3,6 +3,7 @@ package com.hemti.casejoin.controller;
 import com.hemti.casejoin.model.category.Category;
 import com.hemti.casejoin.model.category.CategoryDTO;
 import com.hemti.casejoin.service.CategoryService;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,8 @@ public class CategoryController {
     @GetMapping("/")
     public ResponseEntity<List<Category>> getCategories() throws Exception {
         try {
-            return ResponseEntity.ok().body(new ArrayList<>(categoryService.findAll()));
+            List<Category> categories = new ArrayList<>(categoryService.findAll());
+            return ResponseEntity.ok().body(categories);
         }catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
@@ -37,7 +39,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getCategory(@RequestParam("id") String id) throws Exception {
+    public ResponseEntity<Category> getCategory(@PathVariable("id") String id) throws Exception {
         try {
             return ResponseEntity.ok(categoryService.findById(id));
         }catch (Exception e) {
@@ -46,7 +48,7 @@ public class CategoryController {
     }
 
     @PutMapping("/")
-    public ResponseEntity<Category> updateCategory(@RequestBody Category category) throws Exception {
+    public ResponseEntity<Category> updateCategory(@RequestBody Category category) {
         try {
             return ResponseEntity.ok(categoryService.update(category));
         }catch (Exception e) {
@@ -54,11 +56,11 @@ public class CategoryController {
         }
     }
 
-    @DeleteMapping("/")
-    public ResponseEntity deleteCategory(@RequestBody String id) throws Exception {
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteCategory(@PathVariable String id) throws Exception {
         try {
             categoryService.delete(id);
-            return ResponseEntity.ok("Product deleted successfully");
+            return ResponseEntity.ok("Category deleted successfully");
         }catch (Exception e) {
             return ResponseEntity.notFound().build();
         }

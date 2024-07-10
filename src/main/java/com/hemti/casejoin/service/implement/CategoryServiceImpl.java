@@ -1,12 +1,15 @@
 package com.hemti.casejoin.service.implement;
 
 import com.hemti.casejoin.model.category.Category;
+import com.hemti.casejoin.model.product.Product;
 import com.hemti.casejoin.repository.CategoryRepository;
 import com.hemti.casejoin.service.CategoryService;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -36,7 +39,14 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category update(Category category) {
-        return categoryRepository.save(category);
+        Optional<Category> categoryOptional = categoryRepository.findById(category.getId());
+        Category updatedCategory = new Category();
+        if (categoryOptional.isPresent()) {
+            updatedCategory.setId(category.getId());
+            updatedCategory.setName(category.getName());
+            updatedCategory.setDescription(category.getDescription());
+        }
+        return categoryRepository.save(updatedCategory);
     }
 
     @Override

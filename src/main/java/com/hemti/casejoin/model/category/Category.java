@@ -1,10 +1,14 @@
 package com.hemti.casejoin.model.category;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hemti.casejoin.model.product.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,6 +23,10 @@ public class Category {
     private String id;
     private String name;
     private String description;
+
+    @OneToMany(mappedBy = "category")
+    @JsonIgnore
+    private List<Product> products;
 
     public Category(CategoryDTO categoryDTO) {
         this.name = categoryDTO.name();
