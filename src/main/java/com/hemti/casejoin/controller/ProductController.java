@@ -2,7 +2,6 @@ package com.hemti.casejoin.controller;
 
 import com.hemti.casejoin.model.category.Category;
 import com.hemti.casejoin.model.product.Product;
-import com.hemti.casejoin.model.product.ProductDTO;
 import com.hemti.casejoin.model.product.ProductResponseDTO;
 import com.hemti.casejoin.service.CategoryService;
 import com.hemti.casejoin.service.ProductService;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/products")
 public class ProductController {
